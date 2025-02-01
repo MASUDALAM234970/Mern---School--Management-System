@@ -52,7 +52,11 @@ const Home = () => {
           <SchoolInfo>
             <Title>School Management System</Title>
             <LoremTextContainer>
-              <p>{loremText}</p>
+              <p>
+                {
+                  "Our school project now features a beautifully designed frontend page, making the Admin Register system more interactive and user-friendly. With smooth navigation and an enhanced user experience, managing administrative tasks has never been easier! 😊🚀"
+                }
+              </p>
             </LoremTextContainer>
             <AdminRegisterLink to="/admin/register">
               Admin Register
