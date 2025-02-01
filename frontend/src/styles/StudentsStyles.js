@@ -1,12 +1,14 @@
-// StudentsStyles.js
 import styled from "styled-components";
 
 export const StudentsContainer = styled.div`
   display: flex;
+  min-height: 100vh;
 `;
 
 export const Content = styled.div`
   flex: 1;
+  margin-left: ${({ isSidebarOpen }) => (isSidebarOpen ? "250px" : "80px")};
+  transition: margin-left 0.3s ease;
 `;
 
 export const StudentsContent = styled.div`

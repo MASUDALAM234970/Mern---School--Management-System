@@ -16,7 +16,7 @@ import Performance from "../src/pages/Admin/Performance";
 import Teachers from "../src/pages/Admin/Teachers";
 import Students from "../src/pages/Admin/Students";
 import Assignments from "../src/pages/Admin/Assignments";
-import Library from "../src/pages/Admin/Library";
+import Library from "../src/pages/Admin/Library.jsx";
 import EventCalender from "../src/pages/Admin/EventCalender";
 import SettingsProfile from "../src/pages/Admin/SettingsProfile";
 import Announcement from "../src/pages/Admin/Announcement";
