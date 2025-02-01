@@ -1,12 +1,15 @@
-// PerformanceStyles.js
 import styled from "styled-components";
 
 export const PerformanceContainer = styled.div`
   display: flex;
+  min-height: 100vh;
 `;
 
 export const Content = styled.div`
   flex: 1;
+  margin-left: ${({ isSidebarOpen }) => (isSidebarOpen ? "250px" : "80px")};
+  transition: margin-left 0.3s ease;
+  padding: 20px;
 `;
 
 export const PerformanceContent = styled.div`
@@ -25,7 +28,7 @@ export const SchoolPerformance = styled.div`
 export const IndividualPerformance = styled.div``;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px; /* Sidebar width */
+  flex: 0 0 250px;
 `;
 
 export const PerformanceInfo = styled.div`

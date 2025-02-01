@@ -137,6 +137,14 @@ const Sidebar = () => {
         </SidebarNavItem>
         <SidebarNavItem>
           <SidebarIcon isOpen={isOpen}>
+            <BsPerson />
+          </SidebarIcon>
+          <StyledLink to="/admin/teachers" isOpen={isOpen}>
+            Teachers
+          </StyledLink>
+        </SidebarNavItem>
+        <SidebarNavItem>
+          <SidebarIcon isOpen={isOpen}>
             <BsFileText />
           </SidebarIcon>
           <StyledLink to="/admin/assignments" isOpen={isOpen}>
