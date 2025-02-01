@@ -193,6 +193,14 @@ const Sidebar = () => {
         </SidebarNavItem>
         <SidebarNavItem>
           <SidebarIcon isOpen={isOpen}>
+            <BsBook />
+          </SidebarIcon>
+          <StyledLink to="/admin/library" isOpen={isOpen}>
+            Library
+          </StyledLink>
+        </SidebarNavItem>
+        <SidebarNavItem>
+          <SidebarIcon isOpen={isOpen}>
             <BsGear />
           </SidebarIcon>
           <StyledLink to="/admin/settings" isOpen={isOpen}>

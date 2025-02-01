@@ -1,13 +1,19 @@
-// LibraryStyles.js
 import styled from "styled-components";
 
+// Set a specific max height for the content and container
 export const LibraryContainer = styled.div`
   display: flex;
+  height: 80vh; /* Adjust the height as per your requirement, not full screen */
+  overflow: hidden;
+  margin: 20px; /* Add margin around the container to make it shorter */
 `;
 
 export const Content = styled.div`
-  flex: 1;
+  flex-grow: 1; /* Allow content to grow */
   padding: 20px;
+  overflow-y: auto; /* Allow scrolling if content is too long */
+  background-color: #f9f9f9;
+  max-height: 100%; /* Ensure content doesn't exceed container height */
 `;
 
 export const Title = styled.h1`
@@ -78,7 +84,11 @@ export const ActionButton = styled.button`
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px; /* Sidebar width */
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
 `;
 
 export const LibraryHeader = styled.h1`
