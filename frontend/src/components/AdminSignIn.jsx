@@ -15,6 +15,7 @@ const AdminSignIn = () => {
     e.preventDefault();
     console.log("email", email);
     console.log("email", password);
+    window.location.href = "/admin/dashboard";
 
     // try {
     //   const response = await axios.post('http://localhost:4000/api/v1/users/signin', { email, password });
