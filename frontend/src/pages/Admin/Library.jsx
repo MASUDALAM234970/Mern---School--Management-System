@@ -1,4 +1,3 @@
-// Library.js
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
@@ -16,10 +15,13 @@ import {
   BookTitle,
   BookAuthor,
   ActionButton,
+  SearchBar, // ✅ Added SearchBar import
 } from "../../styles/LibraryStyles";
 
 const Library = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // ✅ Sidebar toggle state
   const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // ✅ Search state
 
   useEffect(() => {
     fetchBooks();
@@ -45,7 +47,11 @@ const Library = () => {
           author: book.author,
         }
       );
-      setBooks([...books, response.data]);
+
+      if (response.data.success) {
+        // ✅ Check API response
+        setBooks([...books, response.data.book]);
+      }
     } catch (error) {
       console.error("Error adding book:", error);
     }
@@ -59,16 +65,37 @@ const Library = () => {
     // Implement logic to mark when a student returns a book
   };
 
+  // ✅ Filter books based on search input
+  const filteredBooks = books.filter(
+    (book) =>
+      book.bookname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <LibraryContainer>
-      <Sidebar />
-      <Content>
+      {/* ✅ Pass Sidebar State */}
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+
+      <Content isSidebarOpen={isSidebarOpen}>
         <Title>Library Management</Title>
+
+        {/* ✅ Added Search Bar */}
+        <SearchBar
+          type="text"
+          placeholder="Search books..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        {/* Add Book Form */}
         <AddBookForm
           onSubmit={(e) => {
             e.preventDefault();
             const book = {
-              id: Math.random().toString(36).substr(2, 9),
               title: e.target.title.value,
               author: e.target.author.value,
             };
@@ -88,9 +115,10 @@ const Library = () => {
           <Button type="submit">Add Book</Button>
         </AddBookForm>
 
+        {/* Book List */}
         <h2>Books</h2>
         <BookList>
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <BookItem key={book._id}>
               <BookTitle>{book.bookname}</BookTitle>
               <BookAuthor>by {book.author}</BookAuthor>

@@ -1,38 +1,42 @@
 import styled from "styled-components";
 
-// Set a specific max height for the content and container
+// Library Container
 export const LibraryContainer = styled.div`
   display: flex;
-  height: 80vh; /* Adjust the height as per your requirement, not full screen */
+  height: 80vh;
   overflow: hidden;
-  margin: 20px; /* Add margin around the container to make it shorter */
+  margin: 20px;
 `;
 
+// Content
 export const Content = styled.div`
-  flex-grow: 1; /* Allow content to grow */
-  padding: 20px;
-  overflow-y: auto; /* Allow scrolling if content is too long */
-  background-color: #f9f9f9;
-  max-height: 100%; /* Ensure content doesn't exceed container height */
+  flex: 1;
+  margin-left: ${({ isSidebarOpen }) => (isSidebarOpen ? "250px" : "80px")};
+  transition: margin-left 0.3s ease;
 `;
 
+// Title
 export const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
+// ✅ AddBookForm - Make sure this exists!
 export const AddBookForm = styled.form`
   margin-bottom: 20px;
 `;
 
+// Form Group
 export const FormGroup = styled.div`
   margin-bottom: 10px;
 `;
 
+// Label
 export const Label = styled.label`
   display: block;
   margin-bottom: 5px;
 `;
 
+// Input
 export const Input = styled.input`
   width: 100%;
   padding: 8px;
@@ -41,6 +45,7 @@ export const Input = styled.input`
   border-radius: 4px;
 `;
 
+// Button
 export const Button = styled.button`
   padding: 8px 16px;
   font-size: 16px;
@@ -51,23 +56,28 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
+// Book List
 export const BookList = styled.ul`
   list-style: none;
   padding: 0;
 `;
 
+// Book Item
 export const BookItem = styled.li`
   margin-bottom: 10px;
 `;
 
+// Book Title
 export const BookTitle = styled.span`
   font-weight: bold;
 `;
 
+// Book Author
 export const BookAuthor = styled.span`
   margin-left: 10px;
 `;
 
+// Action Button
 export const ActionButton = styled.button`
   margin-left: 10px;
   padding: 4px 8px;
@@ -83,6 +93,7 @@ export const ActionButton = styled.button`
   }
 `;
 
+// Sidebar Container
 export const SidebarContainer = styled.div`
   width: 250px;
   background-color: #f4f4f4;
@@ -91,16 +102,12 @@ export const SidebarContainer = styled.div`
   overflow-y: auto;
 `;
 
-export const LibraryHeader = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
-`;
-
-export const BorrowButton = styled.button`
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+// Search Bar - Ensure this exists if needed
+export const SearchBar = styled.input`
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  cursor: pointer;
+  margin-bottom: 20px;
 `;
