@@ -1,131 +1,96 @@
-// Exam.js
 import React, { useState, useEffect } from "react";
-import Sidebar from "./Sidebar";
 import axios from "axios";
+import Sidebar from "./Sidebar";
 import {
-  ExamContainer,
-  SidebarContainer,
+  EventCalendarContainer,
   Content,
-  ExamHeader,
-  ExamForm,
-  FormLabel,
-  FormInput,
-  AddButton,
-} from "../../styles/ExamStyles";
+  CalendarContainer,
+  Events,
+  Event,
+  AddEventForm,
+  EventInput,
+  AddEventButton,
+  ErrorText,
+} from "../../styles/EventCalendarStyles";
 
-const Exam = () => {
-  const [examData, setExamData] = useState([]);
-  const [name, setName] = useState("");
-  const [registrationNumber, setRegistrationNumber] = useState("");
-  const [className, setClassName] = useState("");
-  const [marks, setMarks] = useState("");
+const EventSection = () => {
+  const [events, setEvents] = useState([]);
+  const [newEvent, setNewEvent] = useState("");
+  const [error, setError] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar state
 
-  useEffect(() => {
-    fetchExams();
-  }, []);
-
-  const fetchExams = async () => {
+  // Function to fetch events from the backend
+  const fetchEvents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/v1/exam/getall"
+        "http://localhost:4000/api/v1/events/getall"
       );
-      if (Array.isArray(response.data)) {
-        setExamData(response.data);
-      } else {
-        setExamData([response.data]); // Wrap non-array response in an array
-      }
+      setEvents(response.data.events || []);
     } catch (error) {
-      console.error("Error fetching exams:", error);
+      console.error("Error fetching events:", error);
+      setError("Error fetching events");
     }
   };
 
-  const handleAddExam = async (e) => {
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  // Function to add a new event
+  const addEvent = async (e) => {
     e.preventDefault();
-    const newExam = {
-      name,
-      registrationNumber,
-      className,
-      marks: parseInt(marks),
-    };
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/v1/exam",
-        newExam
-      );
-      // Ensure response data is always an object
-      if (typeof response.data === "object") {
-        setExamData([...examData, response.data]);
-        setName("");
-        setRegistrationNumber("");
-        setClassName("");
-        setMarks("");
-      } else {
-        console.error("Error: API response data is not an object");
-      }
+      const response = await axios.post("http://localhost:4000/api/v1/events", {
+        event: newEvent,
+      });
+      setEvents([...events, response.data.event]);
+      setNewEvent("");
     } catch (error) {
-      console.error("Error adding exam:", error);
+      console.error("Error adding event:", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError("Error adding event");
+      }
     }
   };
 
-  const calculateTotalMarks = () => {
-    let total = 0;
-    for (let i = 0; i < examData.length; i++) {
-      total += examData[i].marks;
-    }
-    return total;
+  // Function to toggle the sidebar state
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
-    <ExamContainer>
-      <SidebarContainer>
-        <Sidebar />
-      </SidebarContainer>
+    <EventCalendarContainer>
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <Content>
-        <ExamHeader>Exam Details</ExamHeader>
-        <ExamForm onSubmit={handleAddExam}>
-          <FormLabel>Name:</FormLabel>
-          <FormInput
+        <h1>Events & Calendar</h1>
+        <div>Current Time: {new Date().toLocaleString()}</div>
+        <CalendarContainer>
+          {/* Display Calendar Here */}
+          {/* For example: <Calendar /> */}
+          Calendar
+        </CalendarContainer>
+        <AddEventForm onSubmit={addEvent}>
+          <h2>Add New Event</h2>
+          <EventInput
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+            value={newEvent}
+            onChange={(e) => setNewEvent(e.target.value)}
+            placeholder="Enter Event"
           />
-          <FormLabel>Registration Number:</FormLabel>
-          <FormInput
-            type="text"
-            value={registrationNumber}
-            onChange={(e) => setRegistrationNumber(e.target.value)}
-            required
-          />
-          <FormLabel>Class:</FormLabel>
-          <FormInput
-            type="text"
-            value={className}
-            onChange={(e) => setClassName(e.target.value)}
-            required
-          />
-          <FormLabel>Marks:</FormLabel>
-          <FormInput
-            type="number"
-            value={marks}
-            onChange={(e) => setMarks(e.target.value)}
-            required
-          />
-          <AddButton type="submit">Add Exam</AddButton>
-        </ExamForm>
-        <h2>Total Marks: {calculateTotalMarks()}</h2>
-        <h3>Exam Details:</h3>
-        <ul>
-          {examData.map((exam, index) => (
-            <li key={index}>
-              Name: {exam.name}, Registration Number: {exam.registrationNumber},
-              Class: {exam.className}, Marks: {exam.marks}
-            </li>
+          <AddEventButton type="submit">Add Event</AddEventButton>
+        </AddEventForm>
+        {error && <ErrorText>{error}</ErrorText>}
+        <Events>
+          <h2>Events</h2>
+          {events.map((event, index) => (
+            <Event key={index}>{event}</Event>
           ))}
-        </ul>
+        </Events>
       </Content>
-    </ExamContainer>
+    </EventCalendarContainer>
   );
 };
 
-export default Exam;
+export default EventSection;
