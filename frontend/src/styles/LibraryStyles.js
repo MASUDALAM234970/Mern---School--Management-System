@@ -111,3 +111,15 @@ export const SearchBar = styled.input`
   border-radius: 4px;
   margin-bottom: 20px;
 `;
+export const LibraryHeader = styled.h1`
+  font-size: 24px;
+  margin-bottom: 20px;
+`;
+export const BorrowButton = styled.button`
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
