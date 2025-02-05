@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
+import validator from "validator";
+
 const studentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  registratinNumber: {
+  registrationNumber: {
     type: String,
     required: true,
     unique: true,
@@ -15,4 +17,4 @@ const studentSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Student", studentSchema);
+export const Student = mongoose.model("Student", studentSchema);
